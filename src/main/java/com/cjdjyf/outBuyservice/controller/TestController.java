@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class TestController {
     @RequestMapping("test")
     public String test(){
+        System.out.println(234542343);
+        System.out.println(123);
         return "test";
     }
 }
