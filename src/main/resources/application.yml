@@ -1,0 +1,12 @@
+server:
+  port: 8888
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+    static-path-pattern: /WEB-INF/static/**
+#关闭默认模板引擎
+  thymeleaf:
+    cache: false
+    enabled: false
