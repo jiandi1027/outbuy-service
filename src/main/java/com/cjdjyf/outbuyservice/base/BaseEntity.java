@@ -11,7 +11,7 @@ import java.util.Date;
  * @description : 基准实体类
  * @date : 2018/4/24 11:18
  */
-public abstract class DataEntity<T> implements Serializable
+public abstract class BaseEntity<T> implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	/**主键 */

@@ -161,32 +161,8 @@ public class MyUtils {
     }
 
 
-    public static void main(String[] args) {
-        CodeCreate codeCreate = new CodeCreate();
-        codeCreate.setTableName("test");
-        codeCreate.setMapperURL("com.cjdjyf.outbuyservice");
-        codeCreate.setPojoURL("");
-        codeCreate.setAuthor("cjd");
-        //构造器 传入参数
-        MapperCreate mapperCreate = new MapperCreate(codeCreate.getTableName(), codeCreate.getMapperURL(), codeCreate.getPojoURL());
-        //项目根目录下的代码生成文件夹
-        String sourcePath = ProjectPathUtil.getProjectPath() + "/codeCreate";
-        try {
-            //生成代码
-            mapperCreate.generator();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        String replaceAllMapper = codeCreate.getMapperURL().replaceAll("\\.", "/");
-        String mapperJava = sourcePath + "/" + replaceAllMapper + "/" + MyUtils.toUpperCaseFirst(codeCreate.getTableName().split("_")) + "Mapper.java";
 
-        String replaceAllPojo = codeCreate.getPojoURL().replaceAll("\\.", "/");
-        String pojoJava = sourcePath + "/" + replaceAllPojo + "/" + MyUtils.toUpperCaseFirst(codeCreate.getTableName().split("_")) + ".java";
-
-        //替换指定字符
-        MyUtils.propertiesChange(mapperJava, "Copyright(C)", "Copyright(C) " + codeCreate.getAuthor());
-        MyUtils.propertiesChange(pojoJava, "Copyright(C)", "Copyright(C) " + codeCreate.getAuthor());
-        MyUtils.propertiesChange(pojoJava, "@author", "@author " + codeCreate.getAuthor());
-
+    public static String getUserName() {
+        return "cjd";
     }
 }
