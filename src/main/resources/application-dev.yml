@@ -1,0 +1,37 @@
+server:
+  port: 8888
+#web依赖
+spring:
+  #数据库
+  datasource:
+      username: root
+      password: 88038899
+      url: jdbc:mysql://localhost:3306/springboot?useUnicode=true&characterEncoding=utf-8
+      driver-class-name: com.mysql.jdbc.Driver
+      type: com.alibaba.druid.pool.DruidDataSource
+      druid:
+        max-wait: 60000
+        max-active: 20
+        min-idle: 5
+        initial-size: 5
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+    static-path-pattern: /WEB-INF/static/**
+  #关闭默认模板引擎
+  thymeleaf:
+    cache: false
+    enabled: false
+  #热部署
+  devtools:
+    restart:
+      enabled: true
+      exclude:  /WEB-INF/**
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.cjdjyf.outbuyservice.mapper
+  #驼峰
+  configuration:
+    map-underscore-to-camel-case: true

@@ -1,4 +1,4 @@
-package com.cjdjyf.outBuyservice;
+package com.cjdjyf.outbuyservice;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

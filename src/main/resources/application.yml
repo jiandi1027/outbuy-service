@@ -1,18 +1,3 @@
-server:
-  port: 8888
 spring:
-  mvc:
-    view:
-      prefix: /WEB-INF/jsp/
-      suffix: .jsp
-    static-path-pattern: /WEB-INF/static/**
-#关闭默认模板引擎
-  thymeleaf:
-    cache: false
-    enabled: false
-
-#热部署生效
-spring.devtools.restart.enabled: true
-#设置重启的目录
-#classpath目录下的WEB-INF文件夹内容修改不重启
-spring.devtools.restart.exclude: /WEB-INF/**
+  profiles:
+    active: dev

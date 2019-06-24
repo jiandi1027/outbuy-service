@@ -1,8 +1,7 @@
-package com.cjdjyf.outBuyservice.controller;
+package com.cjdjyf.outbuyservice.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author ：cjd
@@ -14,8 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class TestController {
     @RequestMapping("test")
     public String test(){
-        System.out.println(234542343);
-        System.out.println(123);
         return "test";
     }
 }
