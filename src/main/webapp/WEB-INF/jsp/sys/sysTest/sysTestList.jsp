@@ -46,7 +46,7 @@
 <script>
     $(function () {
         $('#sysTestList_list').datagrid({
-            title: "数据字典",
+            title: "测试数据",
             url: 'sys/sysTest/list',
             method: 'post',
             toolbar: '#sysTestList_toolbar',
@@ -64,13 +64,13 @@
             },
             columns: [[
                 {title: 'id', field: 'id', checkbox: true},
-                {title: '表名', field: 'tabName', width: '14%', align: 'center'},
-                {title: '列名', field: 'columnName', width: '14%', align: 'center'},
-                {title: '基准键', field: 'parentKey', width: '14%', align: 'center'},
-                {title: '键', field: 'key', width: '14%', align: 'center'},
-                {title: '值', field: 'value', width: '14%', align: 'center'},
-                {title: '备注', field: 'note', width: '14%', align: 'center'},
-                {title: '操作列', field: 'a', width: '15%', align: 'center', formatter: operate}
+
+{title: '表名', field: 'username', width: '16%', align: 'center'},
+{title: '表名', field: 'password', width: '16%', align: 'center'},
+{title: '表名', field: 'vvv', width: '16%', align: 'center'},
+{title: '表名', field: 'aaa', width: '16%', align: 'center'},
+{title: '表名', field: 'ccc', width: '16%', align: 'center'},
+                {title: '操作列', field: 'a', width: '16%', align: 'center', formatter: operate}
             ]]
         });
     });

@@ -6,9 +6,12 @@
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="del_flag" jdbcType="VARCHAR" property="delFlag" />
+    <result column="vvv" jdbcType="VARCHAR" property="vvv" />
+    <result column="aaa" jdbcType="VARCHAR" property="aaa" />
+    <result column="ccc" jdbcType="VARCHAR" property="ccc" />
   </resultMap>
   <sql id="Base_Column_List">
-    t.id, t.username, t.password, t.del_flag
+    t.id, t.username, t.password, t.del_flag, t.vvv, t.aaa, t.ccc
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -22,9 +25,11 @@
   </delete>
   <insert id="insert" parameterType="com.cjdjyf.outbuyservice.pojo.sys.SysTest">
     insert into sys_test (id, username, password, 
-      del_flag)
+      del_flag, vvv, aaa, 
+      ccc)
     values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{delFlag,jdbcType=VARCHAR})
+      #{delFlag,jdbcType=VARCHAR}, #{vvv,jdbcType=VARCHAR}, #{aaa,jdbcType=VARCHAR}, 
+      #{ccc,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.cjdjyf.outbuyservice.pojo.sys.SysTest">
     insert into sys_test
@@ -41,6 +46,15 @@
       <if test="delFlag != null">
         del_flag,
       </if>
+      <if test="vvv != null">
+        vvv,
+      </if>
+      <if test="aaa != null">
+        aaa,
+      </if>
+      <if test="ccc != null">
+        ccc,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -54,6 +68,15 @@
       </if>
       <if test="delFlag != null">
         #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="vvv != null">
+        #{vvv,jdbcType=VARCHAR},
+      </if>
+      <if test="aaa != null">
+        #{aaa,jdbcType=VARCHAR},
+      </if>
+      <if test="ccc != null">
+        #{ccc,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -69,6 +92,15 @@
       <if test="delFlag != null">
         del_flag = #{delFlag,jdbcType=VARCHAR},
       </if>
+      <if test="vvv != null">
+        vvv = #{vvv,jdbcType=VARCHAR},
+      </if>
+      <if test="aaa != null">
+        aaa = #{aaa,jdbcType=VARCHAR},
+      </if>
+      <if test="ccc != null">
+        ccc = #{ccc,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -76,7 +108,10 @@
     update sys_test
     set username = #{username,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
-      del_flag = #{delFlag,jdbcType=VARCHAR}
+      del_flag = #{delFlag,jdbcType=VARCHAR},
+      vvv = #{vvv,jdbcType=VARCHAR},
+      aaa = #{aaa,jdbcType=VARCHAR},
+      ccc = #{ccc,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <select id="selectAll" parameterType="com.cjdjyf.outbuyservice.pojo.sys.SysTest" resultMap="BaseResultMap">
@@ -101,6 +136,15 @@
     </if>
     <if test="delFlag != null and delFlag!=''">
       AND t.del_flag = #{delFlag,jdbcType=VARCHAR}
+    </if>
+    <if test="vvv != null and vvv!=''">
+      AND t.vvv = #{vvv,jdbcType=VARCHAR}
+    </if>
+    <if test="aaa != null and aaa!=''">
+      AND t.aaa = #{aaa,jdbcType=VARCHAR}
+    </if>
+    <if test="ccc != null and ccc!=''">
+      AND t.ccc = #{ccc,jdbcType=VARCHAR}
     </if>
   </sql>
 </mapper>

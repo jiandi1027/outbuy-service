@@ -84,6 +84,11 @@
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>1.1.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>RELEASE</version>
+        </dependency>
 
     </dependencies>
 
@@ -104,11 +109,22 @@
                         <!--可以生成不含依赖包的可执行Jar包 -->
                         <configuration>
                             <classifier>exec</classifier>
-
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <!--默认只读取resources目录的,就会不解析mybatis目录下的xml文件-->
+                    <include>**/*Mapper.xml</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
 </project>

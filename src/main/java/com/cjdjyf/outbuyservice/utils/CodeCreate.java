@@ -10,6 +10,7 @@ import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.internal.DefaultShellCallback;
 
 import java.io.*;
+import java.lang.reflect.Field;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,6 +26,8 @@ public class CodeCreate extends BaseEntity implements Serializable {
     private String sourcePath;
     //表名
     private String tableName;
+    //表名
+    private String tableDesc;
     //包名
     private String packageName;
 
@@ -92,6 +95,7 @@ public class CodeCreate extends BaseEntity implements Serializable {
         MyUtils.propertiesChange(mapperURL, "Copyright(C)", "Copyright(C) " + author);
         MyUtils.propertiesChange(pojoURL, "Copyright(C)", "Copyright(C) " + author);
         MyUtils.propertiesChange(pojoURL, "@author", "@author " + author);
+
     }
 
     public void generatorController() throws Exception {
@@ -99,8 +103,8 @@ public class CodeCreate extends BaseEntity implements Serializable {
                 "\n" +
                 "import com.cjdjyf.outbuyservice.base.PageBean;\n" +
                 "import com.cjdjyf.outbuyservice.base.ResultBean;\n" +
-                "import com.cjdjyf.outbuyservice.pojo.sys.SysTest;\n" +
-                "import com.cjdjyf.outbuyservice.service.sys.SysTestService;\n" +
+                "import com.cjdjyf.outbuyservice.pojo." + packageName + "." + firstUpperTableName + ";\n" +
+                "import com.cjdjyf.outbuyservice.service." + packageName + "." + firstUpperTableName + "Service;\n" +
                 "import org.springframework.beans.factory.annotation.Autowired;\n" +
                 "import org.springframework.stereotype.Controller;\n" +
                 "import org.springframework.web.bind.annotation.GetMapping;\n" +
@@ -174,8 +178,135 @@ public class CodeCreate extends BaseEntity implements Serializable {
     }
 
     public void generatorJsp() throws Exception {
-        generator(jspURL, "");
+        String content = "<%@ page language=\"java\" contentType=\"text/html; charset=UTF-8\"\n" +
+                "         pageEncoding=\"UTF-8\" %>\n" +
+                "<html>\n" +
+                "<head>\n" +
+                "    <%@include file=\"/WEB-INF/head/headCss.jsp\" %>\n" +
+                "    <%@include file=\"/WEB-INF/head/headTag.jsp\" %>\n" +
+                "    <%@include file=\"/WEB-INF/head/headJs.jsp\" %>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "<loading:loading>\n" +
+                "</loading:loading>\n" +
+                "<div class=\"easyui-layout\" data-options=\"fit:true,border:false\">\n" +
+                "    <div data-options=\"region:'center'\">\n" +
+                "        <table id=\"" + firstLowerTableName + "List_list\" class=\"easyui-datagrid\"></table>\n" +
+                "    </div>\n" +
+                "    <form id=\"" + firstLowerTableName + "List_searchForm\">\n" +
+                "        <div data-options=\"region:'east',iconCls:'icon-reload',title:'搜索条件',split:true\" class=\"searchForm-east\">\n" +
+                "            <div class=\"easyui-layout\">\n" +
+                "                <div data-options=\"region:'center'\" class=\"center\">\n" +
+                "                    <div>\n" +
+                "                        <span> 表名： </span>\n" +
+                "                        <input class=\"easyui-textbox\" name=\"tabName\" title=\"\">\n" +
+                "                    </div>\n" +
+                "                    <div>\n" +
+                "                        <span> 列名： </span>\n" +
+                "                        <input class=\"easyui-textbox\" name=\"columnName\" title=\"\">\n" +
+                "                    </div>\n" +
+                "                </div>\n" +
+                "\n" +
+                "                <div data-options=\"region:'south'\" class=\"south\">\n" +
+                "                    <a class=\"easyui-linkbutton search_btn\" data-options=\"iconCls:'icon-search'\" id=\"" + firstLowerTableName + "List_search\"\n" +
+                "                       onClick=\"$('#" + firstLowerTableName + "List_list').datagrid('load',$.serializeObject($('#" + firstLowerTableName + "List_searchForm')));\">搜索</a>\n" +
+                "                    <a class=\"easyui-linkbutton\" data-options=\"iconCls:'icon-clear'\" id=\"" + packageName + "AccountList_clear\"\n" +
+                "                       onClick=\"$('#" + firstLowerTableName + "List_searchForm').form('clear');$('#" + firstLowerTableName + "List_list').datagrid('load',$.serializeObject($('#" + firstLowerTableName + "List_searchForm')));\">清空</a>\n" +
+                "                </div>\n" +
+                "            </div>\n" +
+                "        </div>\n" +
+                "    </form>\n" +
+                "</div>\n" +
+                "<div id=\"" + firstLowerTableName + "List_toolbar\">\n" +
+                "    <a onclick=\"" + firstLowerTableName + "List_add(null);\" href=\"javascript:void(0);\"\n" +
+                "       class=\"easyui-linkbutton\" data-options=\"plain:true,iconCls:'fa fa-plus'\">新增</a>\n" +
+                "    <a onclick=\"" + firstLowerTableName + "List_del();\" href=\"javascript:void(0);\"\n" +
+                "       class=\"easyui-linkbutton\" data-options=\"plain:true,iconCls:'fa fa-times '\">删除</a>\n" +
+                "</div>\n" +
+                "<script>\n" +
+                "    $(function () {\n" +
+                "        $('#" + firstLowerTableName + "List_list').datagrid({\n" +
+                "            title: \"" + tableDesc + "\",\n" +
+                "            url: '" + packageName + "/" + firstLowerTableName + "/list',\n" +
+                "            method: 'post',\n" +
+                "            toolbar: '#" + firstLowerTableName + "List_toolbar',\n" +
+                "            singleSelect: true,\n" +
+                "            loadMsg: '数据正在加载,请耐心等待...',\n" +
+                "            fit: true,\n" +
+                "            fitColumns: true,\n" +
+                "            striped: true,\n" +
+                "            animate: true,\n" +
+                "            pagination: true,\n" +
+                "            pageSize: 10,\n" +
+                "            pageList: [5, 10, 15, 20, 30, 50],\n" +
+                "            onLoadSuccess: function () {\n" +
+                "                $('." + firstLowerTableName + "List_change').linkbutton({text: '修改', plain: true, iconCls: 'fa fa-repeat'});\n" +
+                "            },\n" +
+                "            columns: [[\n" +
+                "                {title: 'id', field: 'id', checkbox: true},\n";
+        Class cls = Class.forName(pojo + "." + firstUpperTableName);
+        //得到所有属性
+        Field[] fields = cls.getDeclaredFields();
+        int num = fields.length + 1;
+        int length = num < 7 ? 98 / num : 30;
+        for (int i = 0; i < fields.length; i++) {//遍历
+            //得到属性
+            Field field = fields[i];
+            //打开私有访问
+            field.setAccessible(true);
+            //获取属性
+            String name = field.getName();
+            content = content + "\n" + "{title: '表名', field: '" + name + "', width: '" + length + "%', align: 'center'},";
+        }
 
+        content = content + "\n" +
+                "                {title: '操作列', field: 'a', width: '" + length + "%', align: 'center', formatter: operate}\n" +
+                "            ]]\n" +
+                "        });\n" +
+                "    });\n" +
+                "\n" +
+                "    //操作列\n" +
+                "    function operate(val, row, index) {\n" +
+                "        var operation = '';\n" +
+                "        operation += '<a href=\"javascript:void(0);\" href=\"javascript:void(0);\" class=\"" + firstLowerTableName + "List_change\" '\n" +
+                "            + 'onClick=\"" + firstLowerTableName + "List_add(\\'' + row.id + '\\')\">修改</a>';\n" +
+                "        return operation;\n" +
+                "    }\n" +
+                "\n" +
+                "    //添加 修改\n" +
+                "    function " + firstLowerTableName + "List_add(id) {\n" +
+                "        window.location = document.getElementsByTagName(\"base\")[0].getAttribute(\"href\") + '" + packageName + "/" + firstLowerTableName + "/addList?id=' + id;\n" +
+                "    }\n" +
+                "\n" +
+                "    //删除\n" +
+                "    function " + firstLowerTableName + "List_del() {\n" +
+                "        var " + firstLowerTableName + "List_list = $('#" + firstLowerTableName + "List_list');\n" +
+                "        var row = " + firstLowerTableName + "List_list.datagrid('getSelected');\n" +
+                "        $.messager.confirm('删除', '确认要删除吗？', function (r) {\n" +
+                "            if (r) {\n" +
+                "                $.ajax({\n" +
+                "                    type: 'POST',\n" +
+                "                    data: {\n" +
+                "                        id: row.id\n" +
+                "                    },\n" +
+                "                    url: '" + packageName + "/" + firstLowerTableName + "/del',\n" +
+                "                    success: function (data) {\n" +
+                "                        if (data.code === 200) {\n" +
+                "                            " + firstLowerTableName + "List_list.datagrid('reload');\n" +
+                "                            showMsg(data.data);\n" +
+                "                        } else {\n" +
+                "                            showMsg('删除失败');\n" +
+                "                        }\n" +
+                "                    }\n" +
+                "                })\n" +
+                "            }\n" +
+                "        });\n" +
+                "    }\n" +
+                "</script>\n" +
+                "</body>\n" +
+                "</html>\n" +
+                "\n";
+        generator(jspURL, content);
     }
 
     private void generator(String savePath, String str) {
@@ -372,7 +503,7 @@ public class CodeCreate extends BaseEntity implements Serializable {
 
     public void setJsp(String jsp) {
         this.jsp = jsp;
-        this.jspURL = jsp + "" + firstUpperTableName + "List.jsp";
+        this.jspURL = jsp + firstLowerTableName + "/" + firstLowerTableName + "List.jsp";
     }
 
     public String getJspURL() {
@@ -381,5 +512,13 @@ public class CodeCreate extends BaseEntity implements Serializable {
 
     public void setJspURL(String jspURL) {
         this.jspURL = jspURL;
+    }
+
+    public String getTableDesc() {
+        return tableDesc;
+    }
+
+    public void setTableDesc(String tableDesc) {
+        this.tableDesc = tableDesc;
     }
 }
