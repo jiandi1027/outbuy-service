@@ -18,7 +18,7 @@ import java.util.List;
  * @date : 2018/4/24 11:18
  */
 @Transactional(readOnly = true)
-public class BaseService<D extends BaseDao<T>, T extends BaseEntity<T>> {
+public class BaseService<D extends BaseDao<T>, T extends BaseEntity> {
 
     /**
      * 日志对象

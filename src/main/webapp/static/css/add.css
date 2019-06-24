@@ -1,0 +1,12 @@
+.add_table {
+    margin: 15px;
+    border-spacing: 10px;
+}
+
+.add_table td {
+    height: 28px;
+}
+
+.add_btn a {
+    margin: 10px 30px 0px 20px;
+}

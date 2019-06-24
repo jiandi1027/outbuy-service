@@ -1,8 +1,5 @@
 package com.cjdjyf.outbuyservice.utils;
 
-import com.cjdjyf.outbuyservice.pojo.tool.codeCreate.CodeCreate;
-import com.cjdjyf.outbuyservice.pojo.tool.codeCreate.MapperCreate;
-
 import java.io.*;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -29,7 +26,7 @@ public class MyUtils {
     /**
      * @return : java.lang.String
      * @author : cjd
-     * @description : 首字母大写 用于数据库表转换实体类
+     * @description : 分割后的数组首字母大写 用于数据库表转换实体类
      * @params : [strings]
      * @date : 20:52 2018/5/4
      */
@@ -40,7 +37,18 @@ public class MyUtils {
         }
         return upper.toString();
     }
-
+    /**
+     * @author : cjd
+     * @description : 单字符首字母小子
+     * @return : java.lang.String
+     * @date : 14:03 2019/6/24
+     */
+    public static String toLowerCaseFirstOne(String s){
+        if(Character.isLowerCase(s.charAt(0)))
+            return s;
+        else
+            return (new StringBuilder()).append(Character.toLowerCase(s.charAt(0))).append(s.substring(1)).toString();
+    }
     /**
      * @return : boolean
      * @author : cjd
