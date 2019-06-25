@@ -178,6 +178,12 @@ public class CodeCreate extends BaseEntity implements Serializable {
     }
 
     public void generatorJsp() throws Exception {
+        generatorListJsp();
+        generatorAddListJsp();
+    }
+
+
+    private void generatorListJsp() throws Exception {
         String content = "<%@ page language=\"java\" contentType=\"text/html; charset=UTF-8\"\n" +
                 "         pageEncoding=\"UTF-8\" %>\n" +
                 "<html>\n" +
@@ -214,8 +220,6 @@ public class CodeCreate extends BaseEntity implements Serializable {
                     "                        <input style=\"width: 100px\" class=\"easyui-textbox\" name=\"" + name + "\" title=\"\">\n" +
                     "                    </div>\n";
         }
-
-
         content +=
                 "                </div>\n" +
                         "                <div data-options=\"region:'south'\" class=\"south\">\n" +
@@ -312,8 +316,94 @@ public class CodeCreate extends BaseEntity implements Serializable {
                 "</body>\n" +
                 "</html>\n" +
                 "\n";
-        generator(jspURL, content);
+        generator(jspURL + "List.jsp", content);
     }
+
+    private void generatorAddListJsp() throws Exception {
+        String content = "<%@ page language=\"java\" contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\" %>\n" +
+                "<html>\n" +
+                "<head>\n" +
+                "    <%@include file=\"/WEB-INF/head/headCss.jsp\" %>\n" +
+                "    <%@include file=\"/WEB-INF/head/headTag.jsp\" %>\n" +
+                "    <%@include file=\"/WEB-INF/head/headJs.jsp\" %>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "<loading:loading>\n" +
+                "</loading:loading>\n" +
+                "<div class=\"add_btn\">\n" +
+                "    <a id=\"" + firstLowerTableName + "AddList_save\" class=\"easyui-linkbutton\" data-options=\"iconCls: 'fa fa-floppy-o'\"\n" +
+                "       href=\"javascript:void(0);\">保存</a>\n" +
+                "    <a id=\"" + firstLowerTableName + "AddList_close\" class=\"easyui-linkbutton\" data-options=\"iconCls: 'fa fa-remove'\"\n" +
+                "       href=\"javascript:void(0);\">返回</a>\n" +
+                "</div>\n" +
+                "<form method=\"post\" id=\"" + firstLowerTableName + "AddList_form\">\n" +
+                "    <table id=\"" + firstLowerTableName + "AddList_table\" class=\"add_table\">\n";
+        Class cls = Class.forName(pojo + "." + firstUpperTableName);
+        //得到所有属性
+        Field[] fields = cls.getDeclaredFields();
+        int num = fields.length + 1;
+        int length = num < 7 ? 98 / num : 30;
+        for (int i = 0; i < fields.length; i++) {//遍历
+            //得到属性
+            Field field = fields[i];
+            //打开私有访问
+            field.setAccessible(true);
+            //获取属性
+            String name = field.getName();
+            content += "        <tr>\n" +
+                    "            <td>" + name + "：</td>\n" +
+                    "            <td><input name=\"" + name + "\" class=\"easyui-textbox easyui-validatebox\"\n" +
+                    "                       data-options=\"required:false,validType:['length[0,20]'],delay:'0'\"\n" +
+                    "                       value=\"${" + firstLowerTableName + "." + name + "}\" title=\"\"/></td>\n" +
+                    "        </tr>\n";
+        }
+
+
+        content +=
+                "\n" +
+                        "    </table>\n" +
+                        "</form>\n" +
+                        "<script>\n" +
+                        "    $(function () {\n" +
+                        "    });\n" +
+                        "    //关闭\n" +
+                        "    $('#" + firstLowerTableName + "AddList_close').click(function () {\n" +
+                        "        window.history.go(-1);\n" +
+                        "    });\n" +
+                        "    //保存\n" +
+                        "    $('#" + firstLowerTableName + "AddList_save').click(function () {\n" +
+                        "        var " + firstLowerTableName + "AddList_form = $(\"#" + firstLowerTableName + "AddList_form\");\n" +
+                        "        if (" + firstLowerTableName + "AddList_form.form('validate')) {\n" +
+                        "            " + firstLowerTableName + "AddList_save();\n" +
+                        "        } else {\n" +
+                        "            $.messager.show({\n" +
+                        "                title: '提示',\n" +
+                        "                msg: '数据不能为空'\n" +
+                        "            });\n" +
+                        "        }\n" +
+                        "    });\n" +
+                        "\n" +
+                        "    function " + firstLowerTableName + "AddList_save() {\n" +
+                        "        $.ajax({\n" +
+                        "            type: 'POST',\n" +
+                        "            data: $.param({'id': '${" + firstLowerTableName + ".id}'}) + '&' + $('#" + firstLowerTableName + "AddList_form').serialize(),\n" +
+                        "            url: '" + packageName + "/" + firstLowerTableName + "/save',\n" +
+                        "            success: function (data) {\n" +
+                        "                if (data.code === 200) {\n" +
+                        "                    window.location = document.getElementsByTagName(\"base\")[0].getAttribute(\"href\") + \"" + packageName + "/" + firstLowerTableName + "/list\";\n" +
+                        "                    showMsg(data.data);\n" +
+                        "                } else {\n" +
+                        "                    showMsg('编辑失败');\n" +
+                        "                }\n" +
+                        "            }\n" +
+                        "        });\n" +
+                        "    }\n" +
+                        "</script>\n" +
+                        "</body>\n" +
+                        "</html>\n";
+        generator(jspURL + "AddList.jsp", content);
+    }
+
 
     private void generator(String savePath, String str) {
         File file = new File(savePath.substring(0, savePath.lastIndexOf("/")));
@@ -509,7 +599,7 @@ public class CodeCreate extends BaseEntity implements Serializable {
 
     public void setJsp(String jsp) {
         this.jsp = jsp;
-        this.jspURL = jsp + firstLowerTableName + "/" + firstLowerTableName + "List.jsp";
+        this.jspURL = jsp + firstLowerTableName + "/" + firstLowerTableName;
     }
 
     public String getJspURL() {

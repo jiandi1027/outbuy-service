@@ -27,6 +27,7 @@
 .searchForm-east .easyui-layout .south {
     padding: 10px 30px;
     height: 35px;
+    bottom: 0px !important;
 }
 
 .searchForm-east .easyui-layout .south .search_btn {

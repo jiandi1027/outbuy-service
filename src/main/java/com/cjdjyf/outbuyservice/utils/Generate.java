@@ -14,12 +14,10 @@ public class Generate {
     public void generatorJava() {
         String sourcePath = new File("").getAbsolutePath() + "/src/main/java";
         CodeCreate codeCreate = new CodeCreate(sourcePath);
-        codeCreate.setTableName("sys_test");
-        codeCreate.setTableDesc("测试数据");
-        codeCreate.setPackageName("sys");
+        codeCreate.setTableName("out_buy");
+        codeCreate.setPackageName("out");
         codeCreate.setAuthor("cjd");
-        codeCreate.setJsp(new File("").getAbsolutePath() + "/src/main/webapp/WEB-INF/jsp/sys/");
-        //项目根目录下的代码生成文件夹
+        //项目根目录下的代码生成文件夹r
         try {
             codeCreate.generatorMapper();
             codeCreate.generatorController();
@@ -32,11 +30,11 @@ public class Generate {
     public void generatorJsp() {
         String sourcePath = new File("").getAbsolutePath() + "/src/main/java";
         CodeCreate codeCreate = new CodeCreate(sourcePath);
-        codeCreate.setTableName("sys_test");
+        codeCreate.setTableName("out_buy");
         codeCreate.setTableDesc("测试数据");
-        codeCreate.setPackageName("sys");
+        codeCreate.setPackageName("out");
         codeCreate.setAuthor("cjd");
-        codeCreate.setJsp(new File("").getAbsolutePath() + "/src/main/webapp/WEB-INF/jsp/sys/");
+        codeCreate.setJsp(new File("").getAbsolutePath() + "/src/main/webapp/WEB-INF/jsp/out/");
         //项目根目录下的代码生成文件夹
         try {
             codeCreate.generatorJsp();
