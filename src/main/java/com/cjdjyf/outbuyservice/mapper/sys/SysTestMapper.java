@@ -2,7 +2,7 @@
 * SysTestMapper.java
 * Copyright(C) cjd 
 * All right Reserved
-* 2019-06-24 created
+* 2019-06-25 created
 */
 package com.cjdjyf.outbuyservice.mapper.sys;
 

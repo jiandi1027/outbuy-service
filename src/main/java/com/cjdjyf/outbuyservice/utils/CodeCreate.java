@@ -196,54 +196,7 @@ public class CodeCreate extends BaseEntity implements Serializable {
                 "    <form id=\"" + firstLowerTableName + "List_searchForm\">\n" +
                 "        <div data-options=\"region:'east',iconCls:'icon-reload',title:'搜索条件',split:true\" class=\"searchForm-east\">\n" +
                 "            <div class=\"easyui-layout\">\n" +
-                "                <div data-options=\"region:'center'\" class=\"center\">\n" +
-                "                    <div>\n" +
-                "                        <span> 表名： </span>\n" +
-                "                        <input class=\"easyui-textbox\" name=\"tabName\" title=\"\">\n" +
-                "                    </div>\n" +
-                "                    <div>\n" +
-                "                        <span> 列名： </span>\n" +
-                "                        <input class=\"easyui-textbox\" name=\"columnName\" title=\"\">\n" +
-                "                    </div>\n" +
-                "                </div>\n" +
-                "\n" +
-                "                <div data-options=\"region:'south'\" class=\"south\">\n" +
-                "                    <a class=\"easyui-linkbutton search_btn\" data-options=\"iconCls:'icon-search'\" id=\"" + firstLowerTableName + "List_search\"\n" +
-                "                       onClick=\"$('#" + firstLowerTableName + "List_list').datagrid('load',$.serializeObject($('#" + firstLowerTableName + "List_searchForm')));\">搜索</a>\n" +
-                "                    <a class=\"easyui-linkbutton\" data-options=\"iconCls:'icon-clear'\" id=\"" + packageName + "AccountList_clear\"\n" +
-                "                       onClick=\"$('#" + firstLowerTableName + "List_searchForm').form('clear');$('#" + firstLowerTableName + "List_list').datagrid('load',$.serializeObject($('#" + firstLowerTableName + "List_searchForm')));\">清空</a>\n" +
-                "                </div>\n" +
-                "            </div>\n" +
-                "        </div>\n" +
-                "    </form>\n" +
-                "</div>\n" +
-                "<div id=\"" + firstLowerTableName + "List_toolbar\">\n" +
-                "    <a onclick=\"" + firstLowerTableName + "List_add(null);\" href=\"javascript:void(0);\"\n" +
-                "       class=\"easyui-linkbutton\" data-options=\"plain:true,iconCls:'fa fa-plus'\">新增</a>\n" +
-                "    <a onclick=\"" + firstLowerTableName + "List_del();\" href=\"javascript:void(0);\"\n" +
-                "       class=\"easyui-linkbutton\" data-options=\"plain:true,iconCls:'fa fa-times '\">删除</a>\n" +
-                "</div>\n" +
-                "<script>\n" +
-                "    $(function () {\n" +
-                "        $('#" + firstLowerTableName + "List_list').datagrid({\n" +
-                "            title: \"" + tableDesc + "\",\n" +
-                "            url: '" + packageName + "/" + firstLowerTableName + "/list',\n" +
-                "            method: 'post',\n" +
-                "            toolbar: '#" + firstLowerTableName + "List_toolbar',\n" +
-                "            singleSelect: true,\n" +
-                "            loadMsg: '数据正在加载,请耐心等待...',\n" +
-                "            fit: true,\n" +
-                "            fitColumns: true,\n" +
-                "            striped: true,\n" +
-                "            animate: true,\n" +
-                "            pagination: true,\n" +
-                "            pageSize: 10,\n" +
-                "            pageList: [5, 10, 15, 20, 30, 50],\n" +
-                "            onLoadSuccess: function () {\n" +
-                "                $('." + firstLowerTableName + "List_change').linkbutton({text: '修改', plain: true, iconCls: 'fa fa-repeat'});\n" +
-                "            },\n" +
-                "            columns: [[\n" +
-                "                {title: 'id', field: 'id', checkbox: true},\n";
+                "                <div data-options=\"region:'center'\" class=\"center\">\n";
         Class cls = Class.forName(pojo + "." + firstUpperTableName);
         //得到所有属性
         Field[] fields = cls.getDeclaredFields();
@@ -256,7 +209,60 @@ public class CodeCreate extends BaseEntity implements Serializable {
             field.setAccessible(true);
             //获取属性
             String name = field.getName();
-            content = content + "\n" + "{title: '表名', field: '" + name + "', width: '" + length + "%', align: 'center'},";
+            content += "                    <div>\n" +
+                    "                        <span style=\"width: 100px\"> " + name + "： </span>\n" +
+                    "                        <input style=\"width: 100px\" class=\"easyui-textbox\" name=\"" + name + "\" title=\"\">\n" +
+                    "                    </div>\n";
+        }
+
+
+        content +=
+                "                </div>\n" +
+                        "                <div data-options=\"region:'south'\" class=\"south\">\n" +
+                        "                    <a class=\"easyui-linkbutton search_btn\" data-options=\"iconCls:'icon-search'\" id=\"" + firstLowerTableName + "List_search\"\n" +
+                        "                       onClick=\"$('#" + firstLowerTableName + "List_list').datagrid('load',$.serializeObject($('#" + firstLowerTableName + "List_searchForm')));\">搜索</a>\n" +
+                        "                    <a class=\"easyui-linkbutton\" data-options=\"iconCls:'icon-clear'\" id=\"" + packageName + "AccountList_clear\"\n" +
+                        "                       onClick=\"$('#" + firstLowerTableName + "List_searchForm').form('clear');$('#" + firstLowerTableName + "List_list').datagrid('load',$.serializeObject($('#" + firstLowerTableName + "List_searchForm')));\">清空</a>\n" +
+                        "                </div>\n" +
+                        "            </div>\n" +
+                        "        </div>\n" +
+                        "    </form>\n" +
+                        "</div>\n" +
+                        "<div id=\"" + firstLowerTableName + "List_toolbar\">\n" +
+                        "    <a onclick=\"" + firstLowerTableName + "List_add(null);\" href=\"javascript:void(0);\"\n" +
+                        "       class=\"easyui-linkbutton\" data-options=\"plain:true,iconCls:'fa fa-plus'\">新增</a>\n" +
+                        "    <a onclick=\"" + firstLowerTableName + "List_del();\" href=\"javascript:void(0);\"\n" +
+                        "       class=\"easyui-linkbutton\" data-options=\"plain:true,iconCls:'fa fa-times '\">删除</a>\n" +
+                        "</div>\n" +
+                        "<script>\n" +
+                        "    $(function () {\n" +
+                        "        $('#" + firstLowerTableName + "List_list').datagrid({\n" +
+                        "            title: \"" + tableDesc + "\",\n" +
+                        "            url: '" + packageName + "/" + firstLowerTableName + "/list',\n" +
+                        "            method: 'post',\n" +
+                        "            toolbar: '#" + firstLowerTableName + "List_toolbar',\n" +
+                        "            singleSelect: true,\n" +
+                        "            loadMsg: '数据正在加载,请耐心等待...',\n" +
+                        "            fit: true,\n" +
+                        "            fitColumns: true,\n" +
+                        "            striped: true,\n" +
+                        "            animate: true,\n" +
+                        "            pagination: true,\n" +
+                        "            pageSize: 10,\n" +
+                        "            pageList: [5, 10, 15, 20, 30, 50],\n" +
+                        "            onLoadSuccess: function () {\n" +
+                        "                $('." + firstLowerTableName + "List_change').linkbutton({text: '修改', plain: true, iconCls: 'fa fa-repeat'});\n" +
+                        "            },\n" +
+                        "            columns: [[\n" +
+                        "                {title: 'id', field: 'id', checkbox: true},";
+        for (int i = 0; i < fields.length; i++) {//遍历
+            //得到属性
+            Field field = fields[i];
+            //打开私有访问
+            field.setAccessible(true);
+            //获取属性
+            String name = field.getName();
+            content = content + "\n" + "                {title: '" + name + "', field: '" + name + "', width: '" + length + "%', align: 'center'},";
         }
 
         content = content + "\n" +

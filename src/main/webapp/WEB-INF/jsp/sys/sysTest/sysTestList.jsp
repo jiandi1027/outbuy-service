@@ -18,15 +18,26 @@
             <div class="easyui-layout">
                 <div data-options="region:'center'" class="center">
                     <div>
-                        <span> 表名： </span>
-                        <input class="easyui-textbox" name="tabName" title="">
+                        <span style="width: 100px"> username： </span>
+                        <input style="width: 100px" class="easyui-textbox" name="username" title="">
                     </div>
                     <div>
-                        <span> 列名： </span>
-                        <input class="easyui-textbox" name="columnName" title="">
+                        <span style="width: 100px"> password： </span>
+                        <input style="width: 100px" class="easyui-textbox" name="password" title="">
+                    </div>
+                    <div>
+                        <span style="width: 100px"> vvv： </span>
+                        <input style="width: 100px" class="easyui-textbox" name="vvv" title="">
+                    </div>
+                    <div>
+                        <span style="width: 100px"> aaa： </span>
+                        <input style="width: 100px" class="easyui-textbox" name="aaa" title="">
+                    </div>
+                    <div>
+                        <span style="width: 100px"> ccc： </span>
+                        <input style="width: 100px" class="easyui-textbox" name="ccc" title="">
                     </div>
                 </div>
-
                 <div data-options="region:'south'" class="south">
                     <a class="easyui-linkbutton search_btn" data-options="iconCls:'icon-search'" id="sysTestList_search"
                        onClick="$('#sysTestList_list').datagrid('load',$.serializeObject($('#sysTestList_searchForm')));">搜索</a>
@@ -64,12 +75,11 @@
             },
             columns: [[
                 {title: 'id', field: 'id', checkbox: true},
-
-{title: '表名', field: 'username', width: '16%', align: 'center'},
-{title: '表名', field: 'password', width: '16%', align: 'center'},
-{title: '表名', field: 'vvv', width: '16%', align: 'center'},
-{title: '表名', field: 'aaa', width: '16%', align: 'center'},
-{title: '表名', field: 'ccc', width: '16%', align: 'center'},
+                {title: 'username', field: 'username', width: '16%', align: 'center'},
+                {title: 'password', field: 'password', width: '16%', align: 'center'},
+                {title: 'vvv', field: 'vvv', width: '16%', align: 'center'},
+                {title: 'aaa', field: 'aaa', width: '16%', align: 'center'},
+                {title: 'ccc', field: 'ccc', width: '16%', align: 'center'},
                 {title: '操作列', field: 'a', width: '16%', align: 'center', formatter: operate}
             ]]
         });
